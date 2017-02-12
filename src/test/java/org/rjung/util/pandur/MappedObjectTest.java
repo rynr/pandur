@@ -1,4 +1,4 @@
-package org.rjung.util.pandur.description;
+package org.rjung.util.pandur;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;

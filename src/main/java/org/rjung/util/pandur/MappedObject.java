@@ -1,8 +1,9 @@
-package org.rjung.util.pandur.description;
+package org.rjung.util.pandur;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,6 +36,10 @@ public class MappedObject {
       return table.name();
     }
     return clazz.getSimpleName().replaceAll("([^_A-Z])([A-Z])", "$1\\_$2").toLowerCase();
+  }
+
+  Collection<MappedProperty> getMappedProperties() {
+    return properties.values();
   }
 
   public Set<String> getProperties() {

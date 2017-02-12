@@ -12,8 +12,6 @@ import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
 
-import org.rjung.util.pandur.description.MappedObject;
-
 public class Pandur {
 
   private final DataSource dataSource;
@@ -28,9 +26,7 @@ public class Pandur {
   // TODO replace Exceptions
   public <T extends Object> T find(final Object id, final Class<T> clazz)
       throws SQLException, InstantiationException, IllegalAccessException {
-    if (!mapping.containsKey(clazz)) {
-      throw new IllegalArgumentException("class " + clazz.getName() + " not found in mapping");
-    }
+    verifyClassIsMapped(clazz);
 
     final Connection connection = dataSource.getConnection();
     final Statement statement = connection.createStatement();
@@ -57,5 +53,17 @@ public class Pandur {
    */
   public Set<Class<?>> getMappedClasses() {
     return mapping.keySet();
+  }
+
+  public Query query(final Class<?> clazz) {
+    verifyClassIsMapped(clazz);
+
+    return Query.query(mapping.get(clazz));
+  }
+
+  private <T> void verifyClassIsMapped(final Class<?> clazz) {
+    if (!mapping.containsKey(clazz)) {
+      throw new IllegalArgumentException("class " + clazz.getName() + " not found in mapping");
+    }
   }
 }

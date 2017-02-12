@@ -1,4 +1,4 @@
-package org.rjung.util.pandur.description;
+package org.rjung.util.pandur;
 
 public class PandurInitializationException extends RuntimeException {
   private static final long serialVersionUID = -2622329874880395287L;

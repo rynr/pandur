@@ -1,4 +1,4 @@
-package org.rjung.util.pandur.description;
+package org.rjung.util.pandur;
 
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
