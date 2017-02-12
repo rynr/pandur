@@ -14,6 +14,7 @@ public class PropertyTest {
   private static final String PROPERTY_PASSWORD = "passwordEncrypted";
   private static final String PROPERTY_EMAIL = "email";
   private static final String PROPERTY_ID = "id";
+  private static final String INVALID_PROPERTY = "invalid";
 
   @Test
   public void verifyColumnNameIsTakenFromAnnotationIfSetInColumn() throws IntrospectionException {
@@ -45,5 +46,9 @@ public class PropertyTest {
     assertThat(resultPassword.isId(), is(false));
   }
 
+  @Test(expected = PandurInitializationException.class)
+  public void verifyUnknownColumnNameCausesException() throws IntrospectionException {
+    new Property(User.class, new PropertyDescriptor(INVALID_PROPERTY, User.class, null, null));
+  }
 
 }
