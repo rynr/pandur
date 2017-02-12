@@ -37,6 +37,14 @@ Pandur pandur = new Pandur(dataSource, User.class);
 User user = pandur.findById(User.class, 123);
 ```
 
+Current restrictions
+--------------------
+
+This is the first POC. I only can query a list of Objects. The properties need
+to be `Long` or `String`.  
+Please check the [Issues](https://github.com/rynr/pandur/issues) for the next
+steps.
+
 Links
 -----
 
