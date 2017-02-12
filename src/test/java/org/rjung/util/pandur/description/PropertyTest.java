@@ -17,28 +17,28 @@ public class PropertyTest {
 
   @Test
   public void verifyColumnNameIsTakenFromAnnotationIfSetInColumn() throws IntrospectionException {
-    final Property<User> result =
-        new Property<>(User.class, new PropertyDescriptor(PROPERTY_EMAIL, User.class, null, null));
+    final Property result =
+        new Property(User.class, new PropertyDescriptor(PROPERTY_EMAIL, User.class, null, null));
 
     assertThat(result.getColumnName(), is(PROPERTY_EMAIL));
   }
 
   @Test
   public void verifyColumnNameIsTakenFromPropertyIfNotSetInColumn() throws IntrospectionException {
-    final Property<User> result = new Property<>(User.class,
-        new PropertyDescriptor(PROPERTY_PASSWORD, User.class, null, null));
+    final Property result =
+        new Property(User.class, new PropertyDescriptor(PROPERTY_PASSWORD, User.class, null, null));
 
     assertThat(result.getColumnName(), is("password"));
   }
 
   @Test
   public void verifyIdIsTakenFromAnnotation() throws IntrospectionException {
-    final Property<User> resultId =
-        new Property<>(User.class, new PropertyDescriptor(PROPERTY_ID, User.class, null, null));
-    final Property<User> resultEmail =
-        new Property<>(User.class, new PropertyDescriptor(PROPERTY_EMAIL, User.class, null, null));
-    final Property<User> resultPassword = new Property<>(User.class,
-        new PropertyDescriptor(PROPERTY_PASSWORD, User.class, null, null));
+    final Property resultId =
+        new Property(User.class, new PropertyDescriptor(PROPERTY_ID, User.class, null, null));
+    final Property resultEmail =
+        new Property(User.class, new PropertyDescriptor(PROPERTY_EMAIL, User.class, null, null));
+    final Property resultPassword =
+        new Property(User.class, new PropertyDescriptor(PROPERTY_PASSWORD, User.class, null, null));
 
     assertThat(resultId.isId(), is(true));
     assertThat(resultEmail.isId(), is(false));

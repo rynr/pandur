@@ -8,13 +8,13 @@ import javax.persistence.Column;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Property<T> {
+public class Property {
   private static final Logger LOGGER = LoggerFactory.getLogger(Object.class);
   private final PropertyDescriptor description;
   private boolean id;
   private String columnName;
 
-  Property(final Class<T> clazz, final PropertyDescriptor description) {
+  Property(final Class<?> clazz, final PropertyDescriptor description) {
     this.description = description;
     this.columnName = description.getName();
 

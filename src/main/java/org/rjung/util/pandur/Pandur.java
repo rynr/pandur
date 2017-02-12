@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 public class Pandur {
 
   private final DataSource dataSource;
-  private final Map<Class<?>, org.rjung.util.pandur.description.Object<?>> mapping;
+  private final Map<Class<?>, org.rjung.util.pandur.description.Object> mapping;
 
   public Pandur(final DataSource dataSource, final Class<?>... classes) {
     this.dataSource = dataSource;

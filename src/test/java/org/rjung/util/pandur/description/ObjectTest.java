@@ -12,7 +12,7 @@ public class ObjectTest {
 
   @Test
   public void PropertiesAreExtractedFromGivenClass() throws IntrospectionException {
-    final Object<User> object = new Object<>(User.class);
+    final Object object = new Object(User.class);
 
     assertThat(object.getProperties(), hasItems("id", "email", "passwordEncrypted"));
   }
