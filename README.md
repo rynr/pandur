@@ -6,7 +6,13 @@ Database Abstraction for java.
 Usage
 -----
 
-TBD
+This is the intended first usage:
+
+``` java
+DataSource dataSource = ...;
+Pandur pandur = new Pandur(dataSource, User.class);
+User user = pandur.findById(User.class, 123);
+```
 
 Links
 -----

@@ -8,7 +8,8 @@
   <packaging>jar</packaging>
 
   <name>pandur</name>
-  <url>http://maven.apache.org</url>
+  <description>Database Abstraction for Java</description>
+  <url>https://rynr.github.io/pandur</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,17 +17,47 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
 
+    <dependency.javax-persistence.version>1.0.2</dependency.javax-persistence.version>
     <dependency.junit.version>4.12</dependency.junit.version>
-    <plugin.compiler.version>3.6.0</plugin.compiler.version>
-    <plugin.dependency-check.version>1.4.4.1</plugin.dependency-check.version>
+    <dependency.mockito.version>1.10.19</dependency.mockito.version>
+    <dependency.slf4j.version>1.7.22</dependency.slf4j.version>
+    <plugin.compiler.version>3.6.1</plugin.compiler.version>
+    <plugin.dependency-check.version>1.4.5</plugin.dependency-check.version>
     <plugin.jgitflow.version>1.0-m5.1</plugin.jgitflow.version>
   </properties>
 
+  <prerequisites>
+    <maven>3.1</maven>
+  </prerequisites>
+
   <dependencies>
+    <dependency>
+      <groupId>javax.persistence</groupId>
+      <artifactId>persistence-api</artifactId>
+      <version>${dependency.javax-persistence.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${dependency.slf4j.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${dependency.junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>${dependency.mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>${dependency.slf4j.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -54,4 +85,11 @@
       </plugin>
     </plugins>
   </build>
+
+  <scm>
+    <connection>scm:git:https://github.com/rynr/pandur</connection>
+    <developerConnection>scm:git:ssh://git@github.com/rynr/pandur</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/rynr/pandur</url>
+  </scm>
 </project>
