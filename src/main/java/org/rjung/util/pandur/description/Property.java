@@ -39,7 +39,7 @@ public class Property {
   private void handleAnnotation(final Annotation annotation) {
     switch (annotation.annotationType().getName()) {
       case "javax.persistence.Id":
-        LOGGER.trace("property " + description.getName() + " is id");
+        LOGGER.trace("property {} is id", description.getName());
         this.id = true;
         break;
 
@@ -48,14 +48,14 @@ public class Property {
         break;
 
       default:
-        LOGGER.trace("Found unhandled annotation: %s", annotation);
+        LOGGER.trace("Found unhandled annotation: {}", annotation);
         break;
     }
   }
 
   private void handleColumn(final Column column) {
-    LOGGER.debug("need to do something with %s", column);
     if (column.name() != null && !column.name().isEmpty()) {
+      LOGGER.trace("property {} has column name {}", description.getName(), column.name());
       this.columnName = column.name();
     }
   }

@@ -3,6 +3,8 @@ package org.rjung.util.pandur;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.junit.Assert.assertThat;
 
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.junit.Test;
@@ -28,5 +30,11 @@ public class PandurTest {
   public void verifyGivenClassesAreInMappedClasses() {
     final Pandur sut = new Pandur(dataSource, User.class);
     assertThat(sut.getMappedClasses(), hasItem(User.class));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void verifyUnknownClassesCauseIllegalArgumentException() {
+    final Pandur sut = new Pandur(dataSource, User.class);
+    sut.find("123", List.class);
   }
 }

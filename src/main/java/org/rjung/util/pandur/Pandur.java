@@ -20,6 +20,10 @@ public class Pandur {
   }
 
   public <T extends Object> T find(final Object id, final Class<T> clazz) {
+    if (!mapping.containsKey(clazz)) {
+      throw new IllegalArgumentException("class " + clazz.getName() + " not found in mapping");
+    }
+
     throw new UnsupportedOperationException("not yet implemented");
   }
 
