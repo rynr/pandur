@@ -1,12 +1,35 @@
 pandur
 ======
 
-Database Abstraction for java.
+Database Abstraction for Java.
 
 Usage
 -----
 
-This is the intended first usage:
+Given a Bean like this:
+
+``` java
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Table(name = "users")
+public class User {
+
+  @Id
+  private Long id;
+
+  @Column()
+  private String email;
+
+  @Column(name = "password")
+  private String passwordEncrypted;
+
+  // getters and setters
+}
+```
+
+Then it should be possible to retrieve a `User`-Object by calling:
 
 ``` java
 DataSource dataSource = ...;
