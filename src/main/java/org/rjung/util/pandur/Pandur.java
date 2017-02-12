@@ -30,35 +30,35 @@ public class Pandur {
       throws SQLException, InstantiationException, IllegalAccessException {
     verifyClassIsMapped(clazz);
 
-    final Connection connection = dataSource.getConnection();
-    final Statement statement = connection.createStatement();
-    final ResultSet resultSet = statement.executeQuery(findSql(id, mapping.get(clazz)));
-
-    if (resultSet.next() && resultSet.last()) {
-      final T result = clazz.newInstance();
-      // TODO extract data to bean
-      return result;
-    } else {
-      throw new SQLException("expected exactly one result");
+    try (Connection connection = dataSource.getConnection()) {
+      try (Statement statement = connection.createStatement()) {
+        try (ResultSet resultSet = statement.executeQuery(findSql(id, mapping.get(clazz)))) {
+          if (resultSet.next() && resultSet.last()) {
+            final T result = clazz.newInstance();
+            // TODO extract data to bean
+            return result;
+          } else {
+            throw new SQLException("expected exactly one result");
+          }
+        }
+      }
     }
   }
 
-  public <T extends Object> List<T> findAll(final Class<T> clazz)
-      throws SQLException, IllegalAccessException, InstantiationException, InvocationTargetException {
+  public <T extends Object> List<T> findAll(final Class<T> clazz) throws SQLException,
+      IllegalAccessException, InstantiationException, InvocationTargetException {
     verifyClassIsMapped(clazz);
-    List<T> result =new ArrayList<>();
+    List<T> result = new ArrayList<>();
     MappedObject mapped = mapping.get(clazz);
     Query query = Query.query(mapped);
     ResultSet resultSet = query(query);
-    while(resultSet.next()) {
+    while (resultSet.next()) {
       T entry = clazz.newInstance();
-      for(MappedProperty property : mapped.getMappedProperties()) {
-        if(property.getPropertyClass() == String.class) {
-          property.getWriteMethod().invoke(entry,
-          resultSet.getString(property.getColumnName()));
-        } else if(property.getPropertyClass() == Long.class) {
-          property.getWriteMethod().invoke(entry,
-              resultSet.getLong(property.getColumnName()));
+      for (MappedProperty property : mapped.getMappedProperties()) {
+        if (property.getPropertyClass() == String.class) {
+          property.getWriteMethod().invoke(entry, resultSet.getString(property.getColumnName()));
+        } else if (property.getPropertyClass() == Long.class) {
+          property.getWriteMethod().invoke(entry, resultSet.getLong(property.getColumnName()));
         }
       }
       result.add(entry);
