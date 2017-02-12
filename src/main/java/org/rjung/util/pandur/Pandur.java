@@ -11,12 +11,12 @@ import javax.sql.DataSource;
 public class Pandur {
 
   private final DataSource dataSource;
-  private final Map<Class<?>, org.rjung.util.pandur.description.Object> mapping;
+  private final Map<Class<?>, org.rjung.util.pandur.description.MappedObject> mapping;
 
   public Pandur(final DataSource dataSource, final Class<?>... classes) {
     this.dataSource = dataSource;
     mapping = Arrays.stream(classes).collect(
-        Collectors.toMap(Function.identity(), org.rjung.util.pandur.description.Object::new));
+        Collectors.toMap(Function.identity(), org.rjung.util.pandur.description.MappedObject::new));
   }
 
   public <T extends Object> T find(final Object id, final Class<T> clazz) {

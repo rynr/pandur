@@ -8,13 +8,13 @@ import javax.persistence.Column;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Property {
-  private static final Logger LOGGER = LoggerFactory.getLogger(Object.class);
+public class MappedProperty {
+  private static final Logger LOGGER = LoggerFactory.getLogger(MappedObject.class);
   private final PropertyDescriptor description;
   private boolean id;
   private String columnName;
 
-  Property(final Class<?> clazz, final PropertyDescriptor description) {
+  MappedProperty(final Class<?> clazz, final PropertyDescriptor description) {
     this.description = description;
     this.columnName = description.getName();
 
@@ -54,9 +54,10 @@ public class Property {
   }
 
   private void handleColumn(final Column column) {
-    if (column.name() != null && !column.name().isEmpty()) {
-      LOGGER.trace("property {} has column name {}", description.getName(), column.name());
-      this.columnName = column.name();
+    final String newColumnName = column.name();
+    if (newColumnName != null && !newColumnName.isEmpty()) {
+      LOGGER.trace("property {} has column name {}", description.getName(), newColumnName);
+      this.columnName = newColumnName;
     }
   }
 

@@ -8,11 +8,11 @@ import java.beans.IntrospectionException;
 import org.junit.Test;
 import org.rjung.util.pandur.beans.User;
 
-public class ObjectTest {
+public class MappedObjectTest {
 
   @Test
   public void PropertiesAreExtractedFromGivenClass() throws IntrospectionException {
-    final Object object = new Object(User.class);
+    final MappedObject object = new MappedObject(User.class);
 
     assertThat(object.getProperties(), hasItems("id", "email", "passwordEncrypted"));
   }

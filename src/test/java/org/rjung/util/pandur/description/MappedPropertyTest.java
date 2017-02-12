@@ -9,7 +9,7 @@ import java.beans.PropertyDescriptor;
 import org.junit.Test;
 import org.rjung.util.pandur.beans.User;
 
-public class PropertyTest {
+public class MappedPropertyTest {
 
   private static final String PROPERTY_PASSWORD = "passwordEncrypted";
   private static final String PROPERTY_EMAIL = "email";
@@ -18,28 +18,28 @@ public class PropertyTest {
 
   @Test
   public void verifyColumnNameIsTakenFromAnnotationIfSetInColumn() throws IntrospectionException {
-    final Property result =
-        new Property(User.class, new PropertyDescriptor(PROPERTY_EMAIL, User.class, null, null));
+    final MappedProperty result =
+        new MappedProperty(User.class, new PropertyDescriptor(PROPERTY_EMAIL, User.class, null, null));
 
     assertThat(result.getColumnName(), is(PROPERTY_EMAIL));
   }
 
   @Test
   public void verifyColumnNameIsTakenFromPropertyIfNotSetInColumn() throws IntrospectionException {
-    final Property result =
-        new Property(User.class, new PropertyDescriptor(PROPERTY_PASSWORD, User.class, null, null));
+    final MappedProperty result =
+        new MappedProperty(User.class, new PropertyDescriptor(PROPERTY_PASSWORD, User.class, null, null));
 
     assertThat(result.getColumnName(), is("password"));
   }
 
   @Test
   public void verifyIdIsTakenFromAnnotation() throws IntrospectionException {
-    final Property resultId =
-        new Property(User.class, new PropertyDescriptor(PROPERTY_ID, User.class, null, null));
-    final Property resultEmail =
-        new Property(User.class, new PropertyDescriptor(PROPERTY_EMAIL, User.class, null, null));
-    final Property resultPassword =
-        new Property(User.class, new PropertyDescriptor(PROPERTY_PASSWORD, User.class, null, null));
+    final MappedProperty resultId =
+        new MappedProperty(User.class, new PropertyDescriptor(PROPERTY_ID, User.class, null, null));
+    final MappedProperty resultEmail =
+        new MappedProperty(User.class, new PropertyDescriptor(PROPERTY_EMAIL, User.class, null, null));
+    final MappedProperty resultPassword =
+        new MappedProperty(User.class, new PropertyDescriptor(PROPERTY_PASSWORD, User.class, null, null));
 
     assertThat(resultId.isId(), is(true));
     assertThat(resultEmail.isId(), is(false));
@@ -48,7 +48,7 @@ public class PropertyTest {
 
   @Test(expected = PandurInitializationException.class)
   public void verifyUnknownColumnNameCausesException() throws IntrospectionException {
-    new Property(User.class, new PropertyDescriptor(INVALID_PROPERTY, User.class, null, null));
+    new MappedProperty(User.class, new PropertyDescriptor(INVALID_PROPERTY, User.class, null, null));
   }
 
 }
