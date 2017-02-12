@@ -1,6 +1,5 @@
 package org.rjung.util.pandur;
 
-import java.beans.IntrospectionException;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
@@ -20,8 +19,7 @@ public class Pandur {
         Collectors.toMap(Function.identity(), org.rjung.util.pandur.description.Object::new));
   }
 
-  public <T extends Object> T find(final Object id, final Class<T> clazz)
-      throws IntrospectionException {
+  public <T extends Object> T find(final Object id, final Class<T> clazz) {
     throw new UnsupportedOperationException("not yet implemented");
   }
 

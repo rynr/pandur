@@ -17,6 +17,13 @@ public class PandurTest {
   @Mock
   private DataSource dataSource;
 
+  @Test(expected = UnsupportedOperationException.class)
+  public void verifyFindIsNotYetImplemented() {
+    // This test is only to calm down solar.
+    final Pandur sut = new Pandur(dataSource, User.class);
+    sut.find("123", User.class);
+  }
+
   @Test
   public void verifyGivenClassesAreInMappedClasses() {
     final Pandur sut = new Pandur(dataSource, User.class);
