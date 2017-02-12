@@ -29,6 +29,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
 
+    <dependency.h2.version>1.4.193</dependency.h2.version>
     <dependency.jacoco.version>0.7.9</dependency.jacoco.version>
     <dependency.javax-persistence.version>1.0.2</dependency.javax-persistence.version>
     <dependency.junit.version>4.12</dependency.junit.version>
@@ -73,6 +74,12 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <version>${dependency.slf4j.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>${dependency.h2.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

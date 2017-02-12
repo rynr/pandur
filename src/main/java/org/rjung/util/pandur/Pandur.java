@@ -1,15 +1,17 @@
 package org.rjung.util.pandur;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
 import javax.sql.DataSource;
 
 public class Pandur {
@@ -41,9 +43,28 @@ public class Pandur {
     }
   }
 
-  private String findSql(final Object id, final MappedObject object) {
-    return "SELECT " + String.join(", " + object.getPropertiesColumnNames()) + " FROM "
-        + object.getTableName();
+  public <T extends Object> List<T> findAll(final Class<T> clazz)
+      throws SQLException, IllegalAccessException, InstantiationException, InvocationTargetException {
+    verifyClassIsMapped(clazz);
+    List<T> result =new ArrayList<>();
+    MappedObject mapped = mapping.get(clazz);
+    Query query = Query.query(mapped);
+    ResultSet resultSet = query(query);
+    while(resultSet.next()) {
+      T entry = clazz.newInstance();
+      for(MappedProperty property : mapped.getMappedProperties()) {
+        if(property.getPropertyClass() == String.class) {
+          property.getWriteMethod().invoke(entry,
+          resultSet.getString(property.getColumnName()));
+        } else if(property.getPropertyClass() == Long.class) {
+          property.getWriteMethod().invoke(entry,
+              resultSet.getLong(property.getColumnName()));
+        }
+      }
+      result.add(entry);
+    }
+
+    return result;
   }
 
   /**
@@ -55,10 +76,15 @@ public class Pandur {
     return mapping.keySet();
   }
 
-  public Query query(final Class<?> clazz) {
-    verifyClassIsMapped(clazz);
+  private ResultSet query(Query query) throws SQLException {
+    final Connection connection = dataSource.getConnection();
+    final Statement statement = connection.createStatement();
+    return statement.executeQuery(query.toString());
+  }
 
-    return Query.query(mapping.get(clazz));
+  private String findSql(final Object id, final MappedObject object) {
+    return "SELECT " + String.join(", " + object.getPropertiesColumnNames()) + " FROM "
+        + object.getTableName();
   }
 
   private <T> void verifyClassIsMapped(final Class<?> clazz) {

@@ -19,11 +19,21 @@ public class Query {
   private final MappedObject object;
   private final Map<String, MappedProperty> properties;
   private Order order;
+  private String prefix;
 
   private Query(final MappedObject object, final Collection<MappedProperty> properties) {
     this.object = object;
     this.properties =
         properties.stream().collect(Collectors.toMap(MappedProperty::getName, Function.identity()));
+    this.prefix = "a1";
+  }
+
+  public void order(final String property) {
+    orderBy(properties.get(property));
+  }
+
+  private void orderBy(final MappedProperty property) {
+    this.order = Order.order(property);
   }
 
   @Override
@@ -44,20 +54,19 @@ public class Query {
     return Objects.hash(object, properties);
   }
 
-  public void order(final String property) {
-    orderBy(properties.get(property));
-  }
-
-  private void orderBy(final MappedProperty property) {
-    this.order = Order.order(property);
-  }
-
-
   @Override
   public String toString() {
-    return "SELECT " + properties.values().stream().map(MappedProperty::getColumnName)
-        .collect(Collectors.joining(",")) + " FROM " + object.getTableName()
-        + (order == null ? "" : "ORDER BY " + order);
+    StringBuilder result = new StringBuilder();
+    result.append("SELECT ")
+        .append(properties.values().stream().map(p -> prefix + "." + p.getColumnName())
+            .collect(Collectors.joining(",")));
+    result.append(" FROM ").append(object.getTableName())
+        .append(" AS ").append(prefix);
+    if (order != null) {
+      result.append(order == null ? "" : "ORDER BY " + order).toString();
+    }
+
+    return result.toString();
   }
 
 }

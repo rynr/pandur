@@ -3,6 +3,7 @@ package org.rjung.util.pandur;
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 
+import java.lang.reflect.Method;
 import javax.persistence.Column;
 
 import org.slf4j.Logger;
@@ -34,6 +35,14 @@ public class MappedProperty {
 
   public String getName() {
     return description.getName();
+  }
+
+  public Class getPropertyClass() {
+    return description.getPropertyType();
+  }
+
+  public Method getWriteMethod() {
+    return description.getWriteMethod();
   }
 
   private void handleAnnotation(final Annotation annotation) {

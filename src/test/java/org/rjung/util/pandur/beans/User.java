@@ -65,4 +65,9 @@ public class User {
     this.passwordEncrypted = passwordEncrypted;
 
   }
+  
+  @Override
+  public String toString() {
+    return "User[id=" + id + ", email=\"" + email + "\"]";
+  }
 }
