@@ -57,13 +57,11 @@ public class Query {
   @Override
   public String toString() {
     StringBuilder result = new StringBuilder();
-    result.append("SELECT ")
-        .append(properties.values().stream().map(p -> prefix + "." + p.getColumnName())
-            .collect(Collectors.joining(",")));
-    result.append(" FROM ").append(object.getTableName())
-        .append(" AS ").append(prefix);
+    result.append("SELECT ").append(properties.values().stream()
+        .map(p -> prefix + "." + p.getColumnName()).collect(Collectors.joining(",")));
+    result.append(" FROM ").append(object.getTableName()).append(" AS ").append(prefix);
     if (order != null) {
-      result.append(order == null ? "" : "ORDER BY " + order).toString();
+      result.append("ORDER BY " + order);
     }
 
     return result.toString();

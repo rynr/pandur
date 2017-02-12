@@ -25,26 +25,6 @@ public class Pandur {
         Arrays.stream(classes).collect(Collectors.toMap(Function.identity(), MappedObject::new));
   }
 
-  // TODO replace Exceptions
-  public <T extends Object> T find(final Object id, final Class<T> clazz)
-      throws SQLException, InstantiationException, IllegalAccessException {
-    verifyClassIsMapped(clazz);
-
-    try (Connection connection = dataSource.getConnection()) {
-      try (Statement statement = connection.createStatement()) {
-        try (ResultSet resultSet = statement.executeQuery(findSql(id, mapping.get(clazz)))) {
-          if (resultSet.next() && resultSet.last()) {
-            final T result = clazz.newInstance();
-            // TODO extract data to bean
-            return result;
-          } else {
-            throw new SQLException("expected exactly one result");
-          }
-        }
-      }
-    }
-  }
-
   public <T extends Object> List<T> findAll(final Class<T> clazz) throws SQLException,
       IllegalAccessException, InstantiationException, InvocationTargetException {
     verifyClassIsMapped(clazz);
@@ -80,11 +60,6 @@ public class Pandur {
     final Connection connection = dataSource.getConnection();
     final Statement statement = connection.createStatement();
     return statement.executeQuery(query.toString());
-  }
-
-  private String findSql(final Object id, final MappedObject object) {
-    return "SELECT " + String.join(", " + object.getPropertiesColumnNames()) + " FROM "
-        + object.getTableName();
   }
 
   private <T> void verifyClassIsMapped(final Class<?> clazz) {

@@ -2,8 +2,6 @@ package org.rjung.util.pandur;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
@@ -34,31 +32,10 @@ public class PandurTest {
   private ResultSet resultSet;
 
   @Test
-  public void verifyFindIsNotYetImplemented()
-      throws InstantiationException, IllegalAccessException, SQLException {
-    when(dataSource.getConnection()).thenReturn(connection);
-    when(connection.createStatement()).thenReturn(statement);
-    when(statement.executeQuery(anyString())).thenReturn(resultSet);
-    when(resultSet.next()).thenReturn(true);
-    when(resultSet.last()).thenReturn(true);
-    final Pandur sut = new Pandur(dataSource, User.class);
-
-    final User result = sut.find("123", User.class);
-  }
-
-  @Test
   public void verifyGivenClassesAreInMappedClasses() {
     final Pandur sut = new Pandur(dataSource, User.class);
     assertThat(sut.getMappedClasses(), hasItem(User.class));
   }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void verifyUnknownClassesCauseIllegalArgumentException()
-      throws InstantiationException, IllegalAccessException, SQLException {
-    final Pandur sut = new Pandur(dataSource, User.class);
-    sut.find("123", List.class);
-  }
-
 
   @Test
   public void realTest() throws InvocationTargetException, SQLException, InstantiationException,
